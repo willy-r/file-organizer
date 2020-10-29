@@ -8,13 +8,13 @@ FILE_NAME = "organize.py"
 EXT_NAME = "ext.py"
 
 
-def organize_files(path):
+def organize_files(path: str) -> None:
     if not os.path.exists(path):
-        print("ERROR! Invalid location")
+        print(f"{sys.argv[0]}: {path}: Invalid location")
         return
 
     files = os.listdir(path)
-    extns = {os.path.splitext(file)[1].strip(".") for file in files}
+    extns = {os.path.splitext(f)[1].strip(".") for f in files}
 
     # Create Folders
     for ext in extns:
@@ -24,29 +24,33 @@ def organize_files(path):
             os.makedirs(new)
 
     # Move Files To Folders
-    for file in files:
-        if file in [FILE_NAME, EXT_NAME]:
+    for f in files:
+        if f in [FILE_NAME, EXT_NAME]:
             continue
 
-        ext = os.path.splitext(file)[1].strip(".")
+        ext = os.path.splitext(f)[1].strip(".")
         folder = foldername(ext)
         if not folder:
             continue
 
-        src = os.path.join(path, file)
-        dest = os.path.join(path, folder, file)
+        src = os.path.join(path, f)
+        dest = os.path.join(path, folder, f)
 
         if not os.path.exists(dest):
             shutil.move(src, dest)
-            print(f"Moved {file} to {folder}")
+            print(f"{sys.argv[0]}: {path}: Moved {f} to {folder}")
 
-    print(f"\nSUCCESS! All files organized in {path}")
+    print(f"{sys.argv[0]}: {path}: SUCCESS! All files organized\n")
 
 
 if __name__ == "__main__":
+    USAGE = f"USAGE: python {sys.argv[0]} <location>"
+
+    locations = sys.argv[1:]
+    if not locations:
+        raise SystemExit(USAGE)
     try:
-        location = sys.argv[1]
-        organize_files(location)
-    except Exception as e:
-        print(f"Error: {e}")
-        print("USAGE: python organize.py <location>")
+        for location in locations:
+            organize_files(location)
+    except Exception as err:
+        print(err)
