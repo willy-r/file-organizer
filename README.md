@@ -10,6 +10,8 @@ Automatically organizes files in your computer
 
 `python organize.py C:\Users\ctrla\Downloads`
 
+> If one of your folder has whitespace, the location must be surrounded by (' or "). For example: **C:\Users\ctrla\Cool Folder** should be `python organize.py 'C:\Users\ctrla\Cool Folder'`
+
 ## Pics
 
 ### Before
