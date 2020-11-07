@@ -1,50 +1,41 @@
 import os
-import shutil
 import sys
+import shutil
 
-from ext import foldername
-
-FILE_NAME = "organize.py"
-EXT_NAME = "ext.py"
+from extensions import foldername
 
 
 def organize_files(path: str) -> None:
-    if not os.path.exists(path):
-        print(f"{sys.argv[0]}: {path}: Invalid location")
+    """Organize the files in the path location if exists."""
+    if not os.path.isdir(path) or os.path.abspath(path) == os.getcwd():
+        print(f'{sys.argv[0]}: {path}: Not a valid location')
         return
 
-    files = os.listdir(path)
-    extns = {os.path.splitext(f)[1].strip(".") for f in files}
+    files = [fname for fname in os.listdir(path) if '.' in fname]
+    extensions = {os.path.splitext(fname)[1].lstrip('.') for fname in files}
 
-    # Create Folders
-    for ext in extns:
-        folder = foldername(ext) or ''
-        new = os.path.join(path, folder)
-        if folder and not os.path.exists(new):
-            os.makedirs(new)
+    # Create folders.
+    for extension in extensions:
+        folder = foldername(extension)
+        new_folder = os.path.join(path, folder)
+        os.makedirs(new_folder, exist_ok=True)
 
-    # Move Files To Folders
-    for f in files:
-        if f in [FILE_NAME, EXT_NAME]:
-            continue
+    # Move files to folders.
+    for fname in files:
+        extension = os.path.splitext(fname)[1].lstrip('.')
+        folder = foldername(extension)
 
-        ext = os.path.splitext(f)[1].strip(".")
-        folder = foldername(ext)
-        if not folder:
-            continue
-
-        src = os.path.join(path, f)
-        dest = os.path.join(path, folder, f)
-
+        src = os.path.join(path, fname)
+        dest = os.path.join(path, folder, fname)
         if not os.path.exists(dest):
             shutil.move(src, dest)
-            print(f"{sys.argv[0]}: {path}: Moved {f} to {folder}")
+            print(f'{sys.argv[0]}: {path}: Moved {fname} to {folder}')
 
-    print(f"{sys.argv[0]}: {path}: SUCCESS! All files organized\n")
+    print(f'{sys.argv[0]}: {path}: SUCCESS! All files organized\n')
 
 
 if __name__ == "__main__":
-    USAGE = f"USAGE: python {sys.argv[0]} <location>"
+    USAGE = f'USAGE: python {sys.argv[0]} <location>'
 
     locations = sys.argv[1:]
     if not locations:
