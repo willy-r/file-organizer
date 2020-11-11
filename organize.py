@@ -11,7 +11,8 @@ def organize_files(path: str) -> None:
         print(f'{sys.argv[0]}: {path}: Not a valid location')
         return
 
-    files = [fname for fname in os.listdir(path) if '.' in fname]
+    files = [fname for fname in os.listdir(path)
+             if os.path.isfile(os.path.join(path, fname))]
     extensions = {os.path.splitext(fname)[1].lstrip('.') for fname in files}
 
     # Create folders.
@@ -35,7 +36,7 @@ def organize_files(path: str) -> None:
 
 
 if __name__ == "__main__":
-    USAGE = f'USAGE: python {sys.argv[0]} <location>'
+    USAGE = f'USAGE: python {sys.argv[0]} <locations>'
 
     locations = sys.argv[1:]
     if not locations:
