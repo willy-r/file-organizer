@@ -6,11 +6,11 @@ Automatically organizes files in your computer.
 
 ## Installation
 
-- You need Python 3.9 installed in your machine.
+- You need Python 3.9 installed in your computer.
 
 ### Clone
 
-- Clone this repo to you local machine using `https://github.com/willy-r/file-organizer.git`
+- Clone this repo to your local machine using `https://github.com/willy-r/file-organizer.git`
 
 ### Setup
 
@@ -25,12 +25,10 @@ $ cd file-organizer
 ## Usage
 
 ```shell
-$ python organize.py <location>
+$ python organize.py <locations>
 ```
 
-- The `<location>` must be a valid path (relative or absolute) to the directory that you want to organanize your files.
-
-- You can enter more the one `<location>` with a space between the _locations_.
+- The `<locations>` must be valid paths (relative or absolute) to the directories that you want to organanize your files.
 
 - If one of your folder has whitespace, the location must be surrounded with (' or ").
     
@@ -51,7 +49,7 @@ $ python organize.py example_01
 
 - Output:
 
-![Output file-organizer](https://user-images.githubusercontent.com/47596121/98447209-bb8a0280-2101-11eb-956d-a3b01d8c4741.jpg)
+![Output file-organizer example](https://user-images.githubusercontent.com/47596121/98447209-bb8a0280-2101-11eb-956d-a3b01d8c4741.jpg)
 
 ---
 
