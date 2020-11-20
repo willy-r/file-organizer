@@ -6,7 +6,7 @@ Automatically organizes files in your computer.
 
 ## Installation
 
-- You need Python 3.9 installed in your computer.
+- You need Python 3.6+ installed in your computer.
 
 ### Clone
 
